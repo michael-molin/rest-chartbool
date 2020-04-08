@@ -8,7 +8,6 @@ $(document).ready(function () {
     })
 
     $('.input-data').keyup(function(event) {
-
             if (event.key == "Enter") {
                 meseSelezionato = $('.input-data').val();
                 meseSelezionato = moment(meseSelezionato , 'YYYY-MM-DD');
@@ -150,8 +149,8 @@ $(document).ready(function () {
                 }]
             },
         });
-        // var graficoUnoAggiornato = new Chart($('#grafico-vendite-annuale'), graficoUno);
-        // window.graficoUnoAggiornato.update();
+        var graficoUnoAggiornato = new Chart($('#grafico-vendite-annuale'), graficoUno);
+        graficoUnoAggiornato.update();
     }
 
     function creaGraficoDue (venditori, vendite) {
@@ -167,7 +166,7 @@ $(document).ready(function () {
                 }]
             }
         });
-        // var graficoDueAggiornato = new Chart($('#grafico-addetti-vendite'), myPieChart);
-        // window.graficoDueAggiornato.update();
+        var graficoDueAggiornato = new Chart($('#grafico-addetti-vendite'), myPieChart);
+        graficoDueAggiornato.update();
     }
 });
