@@ -1,4 +1,42 @@
 $(document).ready(function () {
+    var meseSelezionato = '';
+    var venditoreSelezionato = '';
+    var venditeSelezionate = 0;
+    // $('.input-num').hide();
+    // $('.btn').hide();
+
+    $('.slct-venditori').change(function() {
+        venditoreSelezionato = $('.slct-venditori').val();
+        if ((venditoreSelezionato != "") && (meseSelezionato != ''))  {
+            $('input-num').show();
+        }
+        console.log(venditoreSelezionato);
+    })
+
+    $('.slct-mese').change(function() {
+        meseSelezionato = $('.slct-mese').val();
+        if ((venditoreSelezionato != "") && (meseSelezionato != ''))  {
+            $('input-num').show();
+        }
+        console.log(meseSelezionato);
+    })
+
+    $('.input-data').keyup(function(event) {
+
+            if (event.key == "Enter") {
+                meseSelezionato = $('.input-data').val();
+                // meseSelezionato = moment(meseSelezionato , 'YYYY-MM-DD');
+                venditeSelezionate = $('.input-num').val();
+                spedisciDato(meseSelezionato, venditoreSelezionato, venditeSelezionate);
+            }
+    })
+
+    $('.btn').click(function() {
+    meseSelezionato = $('.input-data').val();
+    // meseSelezionato = moment(meseSelezionato , 'YYYY-MM-DD');
+    venditeSelezionate = $('.input-num').val();
+    spedisciDato(meseSelezionato, venditoreSelezionato, venditeSelezionate);
+    })
 
     richiamaGet();
 
@@ -16,7 +54,27 @@ $(document).ready(function () {
                 creaGraficoDue(datiGraficoDue.venditori, datiGraficoDue.vendite);
             },
             error: function() {
-                alert('ERRORE');
+                alert('ERRORE GET');
+            }
+        })
+    }
+
+    function spedisciDato(mese, venditore, numero) {
+        var questoDato = {
+            salesman: venditore,
+            date: mese,
+            amount: parseInt(numero)
+        }
+        $.ajax({
+            url: "http://157.230.17.132:4023/sales",
+            method: "POST",
+            data: questoDato,
+            success: function (data) {
+                console.log('Hai inviato il dato!');
+                richiamaGet();
+            },
+            error: function() {
+                alert('ERROR POST');
             }
         })
     }
@@ -32,7 +90,7 @@ $(document).ready(function () {
                 venditore: datoVendita.salesman,
                 indiceMese: dataVendita.format("MM"),
                 mese: dataVendita.format("MMMM"),
-                numeroVendite: datoVendita.amount
+                numeroVendite: parseInt(datoVendita.amount)
             }
             annoVendite.push(elementoVendita);
         }
@@ -48,6 +106,7 @@ $(document).ready(function () {
         for (var i = 0; i < anno.length; i++) {
             var meseTemp = anno[i].mese;
             if (venditeAssociate[meseTemp] === undefined) {
+                $('.slct-mese').append('<option value="'+meseTemp+'">'+meseTemp+'</option>');
                 venditeAssociate[meseTemp] = 0;
             }
             venditeAssociate[meseTemp] += anno[i].numeroVendite;
@@ -70,6 +129,7 @@ $(document).ready(function () {
             var questoVenditore = dati[i].venditore;
             if (venditeSingole[questoVenditore] === undefined) {
                 venditeSingole[questoVenditore] = 0;
+                $('.slct-venditori').append('<option value="'+questoVenditore+'">'+questoVenditore+'</option>');
             }
             venditeSingole[questoVenditore] += dati[i].numeroVendite;
         }

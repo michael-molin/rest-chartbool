@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Template</title>
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
     <script src="https://kit.fontawesome.com/a51364b666.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -16,12 +16,27 @@
   </head>
   <body>
     <div class="container">
-        <div class="blocco-grafico">
-            <canvas id="grafico-vendite-annuale"></canvas>
+        <div class="grafici">
+            <div class="blocco-grafico">
+                <canvas id="grafico-vendite-annuale"></canvas>
+            </div>
+            <div class="blocco-grafico">
+                <canvas id="grafico-addetti-vendite"></canvas>
+            </div>
         </div>
-        <div class="blocco-grafico">
-            <canvas id="grafico-addetti-vendite"></canvas>
+        <div class="blocco-bottoni">
+            <div class="blocco-select">
+                <select class="slct-venditori" required>
+                    <option value="">Seleziona un venditore</option>
+
+                </select>
+                <input class="input-data" type="date" min="2017-01-01" max="2017-12-31" required> Seleziona una Data </input>
+            </div>
+            <input class="input-num" type="number" placeholder="Digita la quantità" required>
+            <button class="btn">Invia</button>
+
         </div>
+
     </div>
 
 

@@ -5,12 +5,31 @@
 }
 
 .container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.grafici {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
+
 
 .blocco-grafico {
     width: 50vw;
+}
+
+.blocco-bottoni {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.blocco-select *     {
+    margin: 45px;
 }
