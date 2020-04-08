@@ -2,30 +2,16 @@ $(document).ready(function () {
     var meseSelezionato = '';
     var venditoreSelezionato = '';
     var venditeSelezionate = 0;
-    // $('.input-num').hide();
-    // $('.btn').hide();
 
     $('.slct-venditori').change(function() {
         venditoreSelezionato = $('.slct-venditori').val();
-        if ((venditoreSelezionato != "") && (meseSelezionato != ''))  {
-            $('input-num').show();
-        }
-        console.log(venditoreSelezionato);
-    })
-
-    $('.slct-mese').change(function() {
-        meseSelezionato = $('.slct-mese').val();
-        if ((venditoreSelezionato != "") && (meseSelezionato != ''))  {
-            $('input-num').show();
-        }
-        console.log(meseSelezionato);
     })
 
     $('.input-data').keyup(function(event) {
 
             if (event.key == "Enter") {
                 meseSelezionato = $('.input-data').val();
-                // meseSelezionato = moment(meseSelezionato , 'YYYY-MM-DD');
+                meseSelezionato = moment(meseSelezionato , 'YYYY-MM-DD');
                 venditeSelezionate = $('.input-num').val();
                 spedisciDato(meseSelezionato, venditoreSelezionato, venditeSelezionate);
             }
@@ -36,7 +22,6 @@ $(document).ready(function () {
     $('.btn').click(function() {
     meseSelezionato = $('.input-data').val();
     meseSelezionato = moment(meseSelezionato , 'YYYY-MM-DD');
-    console.log(meseSelezionato.format("DD-MM-YYYY"));
     venditeSelezionate = $('.input-num').val();
     spedisciDato(meseSelezionato, venditoreSelezionato, venditeSelezionate);
     })
@@ -170,8 +155,6 @@ $(document).ready(function () {
     }
 
     function creaGraficoDue (venditori, vendite) {
-        console.log(venditori);
-        console.log(vendite);
         var ctx = $('#grafico-addetti-vendite');
         var myPieChart = new Chart(ctx, {
             type: 'pie',
