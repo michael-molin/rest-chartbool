@@ -31,9 +31,12 @@ $(document).ready(function () {
             }
     })
 
+
+
     $('.btn').click(function() {
     meseSelezionato = $('.input-data').val();
-    // meseSelezionato = moment(meseSelezionato , 'YYYY-MM-DD');
+    meseSelezionato = moment(meseSelezionato , 'YYYY-MM-DD');
+    console.log(meseSelezionato.format("DD-MM-YYYY"));
     venditeSelezionate = $('.input-num').val();
     spedisciDato(meseSelezionato, venditoreSelezionato, venditeSelezionate);
     })
@@ -62,7 +65,7 @@ $(document).ready(function () {
     function spedisciDato(mese, venditore, numero) {
         var questoDato = {
             salesman: venditore,
-            date: mese,
+            date: mese.format("DD-MM-YYYY"),
             amount: parseInt(numero)
         }
         $.ajax({
@@ -149,7 +152,7 @@ $(document).ready(function () {
 
     function creaGraficoUno(mese, vendite) {
         var ctx = $('#grafico-vendite-annuale');
-        var chart = new Chart(ctx, {
+        var graficoUno = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: mese,
@@ -162,21 +165,18 @@ $(document).ready(function () {
                 }]
             },
         });
+        // var graficoUnoAggiornato = new Chart($('#grafico-vendite-annuale'), graficoUno);
+        // window.graficoUnoAggiornato.update();
     }
 
     function creaGraficoDue (venditori, vendite) {
         console.log(venditori);
         console.log(vendite);
-        // var venditeTotali = 0;
-        // for (var i = 0; i < vendite.length; i++) {
-        //     venditeTotali += vendite[i];
-        // }
         var ctx = $('#grafico-addetti-vendite');
         var myPieChart = new Chart(ctx, {
             type: 'pie',
             data: {
                 labels: venditori,
-
                 datasets: [{
                     data: vendite,
                     label: 'Report Addetti Anno 2017',
@@ -184,5 +184,7 @@ $(document).ready(function () {
                 }]
             }
         });
+        // var graficoDueAggiornato = new Chart($('#grafico-addetti-vendite'), myPieChart);
+        // window.graficoDueAggiornato.update();
     }
 });
