@@ -16,11 +16,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 
 .blocco-grafico {
-    width: 50vw;
+    width: 40vw;
+    height: 300px;
+}
+
+.secondo-blocco {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .blocco-bottoni {

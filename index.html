@@ -17,23 +17,29 @@
   <body>
     <div class="container">
         <div class="grafici">
-            <div class="blocco-grafico">
+            <div class="blocco-grafico annuale">
                 <canvas id="grafico-vendite-annuale"></canvas>
             </div>
-            <div class="blocco-grafico">
+            <div class="blocco-grafico vendite">
                 <canvas id="grafico-addetti-vendite"></canvas>
             </div>
         </div>
-        <div class="blocco-bottoni">
-            <div class="blocco-select">
-                <select class="slct-venditori" required>
-                    <option value="" disabled selected>Seleziona un venditore</option>
-
-                </select>
-                <input class="input-data" type="date" min="2017-01-01" max="2017-12-31" required>Seleziona una Data</input>
+        <div class="secondo-blocco">
+            <div class="blocco-grafico quarti">
+                <canvas id="grafico-addetti-quarti"></canvas>
             </div>
-            <input class="input-num" type="number" value='' placeholder="Digita la quantità" required>
-            <button class="btn">Invia</button>
+            <div class="blocco-bottoni">
+                <div class="blocco-select">
+                    <select class="slct-venditori" required>
+                        <option value="" disabled selected>Seleziona un venditore</option>
+
+                    </select>
+                    <input class="input-data" type="date" min="2017-01-01" max="2017-12-31" required>Seleziona una Data</input>
+                </div>
+                <input class="input-num" type="number" value='' placeholder="Digita la quantità" required>
+                <button class="btn">Invia</button>
+
+            </div>
 
         </div>
 

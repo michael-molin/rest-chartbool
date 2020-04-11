@@ -12,22 +12,20 @@ $(document).ready(function () {
                 meseSelezionato = $('.input-data').val();
                 meseSelezionato = moment(meseSelezionato , 'YYYY-MM-DD');
                 venditeSelezionate = $('.input-num').val();
-                spedisciDato(meseSelezionato, venditoreSelezionato, venditeSelezionate);
+                richiamaMetodoPost(meseSelezionato, venditoreSelezionato, venditeSelezionate);
             }
     })
-
-
 
     $('.btn').click(function() {
     meseSelezionato = $('.input-data').val();
     meseSelezionato = moment(meseSelezionato , 'YYYY-MM-DD');
     venditeSelezionate = $('.input-num').val();
-    spedisciDato(meseSelezionato, venditoreSelezionato, venditeSelezionate);
+    richiamaMetodoPost(meseSelezionato, venditoreSelezionato, venditeSelezionate);
     })
 
-    richiamaGet();
+    richiamaMetodoGet();
 
-    function richiamaGet() {
+    function richiamaMetodoGet() {
         $.ajax({
             url: "http://157.230.17.132:4023/sales",
             method: "GET",
@@ -39,6 +37,9 @@ $(document).ready(function () {
 
                 var datiGraficoDue = creaDatiGraficoDue(datiGrezzi);
                 creaGraficoDue(datiGraficoDue.venditori, datiGraficoDue.vendite);
+
+                var datiGraficoTre = creaDatiGraficoTre(datiGrezzi);
+                creaGraficoTre(datiGraficoTre);
             },
             error: function() {
                 alert('ERRORE GET');
@@ -46,7 +47,7 @@ $(document).ready(function () {
         })
     }
 
-    function spedisciDato(mese, venditore, numero) {
+    function richiamaMetodoPost(mese, venditore, numero) {
         var questoDato = {
             salesman: venditore,
             date: mese.format("DD-MM-YYYY"),
@@ -58,7 +59,8 @@ $(document).ready(function () {
             data: questoDato,
             success: function (data) {
                 console.log('Hai inviato il dato!');
-                richiamaGet();
+                puliziaGrafici();
+                richiamaMetodoGet();
             },
             error: function() {
                 alert('ERROR POST');
@@ -149,8 +151,6 @@ $(document).ready(function () {
                 }]
             },
         });
-        var graficoUnoAggiornato = new Chart($('#grafico-vendite-annuale'), graficoUno);
-        graficoUnoAggiornato.update();
     }
 
     function creaGraficoDue (venditori, vendite) {
@@ -166,7 +166,45 @@ $(document).ready(function () {
                 }]
             }
         });
-        var graficoDueAggiornato = new Chart($('#grafico-addetti-vendite'), myPieChart);
-        graficoDueAggiornato.update();
+    }
+
+    function puliziaGrafici () {
+        $('.annuale').empty();
+        $('.vendite').empty();
+        $('.quarti').empty();
+        $('.annuale').append("<canvas id='grafico-vendite-annuale'></canvas>");
+        $('.vendite').append('<canvas id="grafico-addetti-vendite"></canvas>');
+        $('.quarti').append('<canvas id="grafico-addetti-quarti"></canvas>');
+    }
+
+    function creaDatiGraficoTre(data){
+        var datiVendite = creaDatiGraficoUno(data);
+        var venditeQuarti = [];
+        var vendite = 0;
+        for (var i = 1; i <= datiVendite.mese.length+1; i++) {
+            vendite += datiVendite.vendite[i-1];
+            if ((i % 3) == 0) {
+                venditeQuarti.push(vendite);
+                vendite= 0;
+            }
+        }
+        return venditeQuarti;
+    }
+
+    function creaGraficoTre(vendite) {
+        var quarto = ["Q1" , "Q2" , "Q3" , "Q4"];
+
+        var ctx = $('#grafico-addetti-quarti');
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: quarto,
+                datasets: [{
+                    data: vendite,
+                    label: 'Report Quarti Anno 2017',
+                    backgroundColor: ['red', 'blue', 'yellow', 'green']
+                }]
+            }
+        });
     }
 });
