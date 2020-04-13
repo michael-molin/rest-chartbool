@@ -181,9 +181,10 @@ $(document).ready(function () {
         var datiVendite = creaDatiGraficoUno(data);
         var venditeQuarti = [];
         var vendite = 0;
-        for (var i = 1; i <= datiVendite.mese.length+1; i++) {
-            vendite += datiVendite.vendite[i-1];
-            if ((i % 3) == 0) {
+        for (var i = 0; i <= datiVendite.mese.length; i++) {
+            var indiceMensile = i +1;
+            vendite += datiVendite.vendite[i];
+            if ((indiceMensile % 3) == 0) {
                 venditeQuarti.push(vendite);
                 vendite= 0;
             }
